@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Menedżer zadań</title>
+
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            background-color: whitesmoke;
+            font-size: x-large;
+            font-family: Arial, serif;
+        }
+
+        header, main, footer {
+            margin: 0 auto;
+            max-width: 70vw;
+            width: 100%;
+
+        }
+
+
+        .form-date label::after,
+        .form-priority label::after,
+        .form-title label::after,
+        .form-category label::after {
+            content: " *";
+            color: red;
+        }
+
+        header {
+            text-align: center;
+            font-family: Verdana, serif;
+            padding: 20px 25px;
+            border-bottom: solid dodgerblue 2px;
+        }
+
+        main {
+            padding: 30px 25px;
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        footer {
+            padding: 0 25px 25px 25px;
+            background-color: white;
+            margin-bottom: 100px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .checkboxes {
+            font-size: medium;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .checkboxes div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        main input, main textarea {
+            color: dimgray;
+            font-size: large;
+            font-family: Consolas, serif;
+            box-sizing: border-box;
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+        }
+
+        main input {
+            padding-left: 7px;
+            outline: none !important;
+            border: 1px solid darkgray;
+            border-radius: 5px;
+            min-height: 40px;
+        }
+
+        main textarea {
+            outline: none !important;
+            border: 1px solid darkgray;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        input:focus, textarea:focus {
+            border: 1px solid dodgerblue;
+            border-radius: 5px;
+            box-shadow: 0 0 10px lightgray;
+        }
+
+        .forms-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 15px;
+            grid-row-gap: 30px;
+        }
+        .additional-forms {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-column-gap: 15px;
+            grid-row-gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .main-message {
+            margin-bottom: 30px;
+        }
+
+        .error-box {
+            padding: 15px 20px 15px 0;
+            font-size: medium;
+            color: brown;
+            background-color: pink;
+            border-left: solid red 5px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            grid-column: 1;
+        }
+
+        .form-category {
+            grid-column: 2;
+        }
+        select {
+            background-image: linear-gradient(to bottom, white, lightgray);
+            border-radius: 3px;
+            width: 100%;
+            padding-left: 3px;
+            height: 40px;
+            font-size: large;
+        }
+
+        .form-category option {
+            border-radius: 3px;
+        }
+        .form-description {
+            margin: 0 10px;
+            grid-column: 1 / -1;
+            height: 200px;
+        }
+        .form-description textarea {
+            display: block;
+            max-width: 100%;
+            width: 100%;
+            height: 70%;
+        }
+
+        select {
+            background-image: linear-gradient(to bottom, white, lightgray);
+        }
+
+        select option {
+            background-color: dimgray;
+            color: white;
+        }
+
+        button {
+            height: 40px;
+            font-size: large;
+            background-image: linear-gradient(to bottom, white, lightgray);
+            border-radius: 3px;
+            border: solid 1px dimgray;
+        }
+        button:hover {
+            background-image: linear-gradient(to top, white, whitesmoke);
+            box-shadow: 0 0 10px whitesmoke;
+        }
+        .send-box {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .checkbox-notifs {
+            width: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+        }
+
+        .form-time-finished {
+            margin-top: 30px;
+        }
+
+        .checkbox-notifs label {
+            font-size: large;
+            margin-right: 5px;
+        }
+
+
+        @media screen and
+        (max-width: 600px) {
+            .send-box {
+                align-items: center;
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .form-time-finished {
+                margin-top: 30px;
+            }
+            .checkbox-notifs label {
+                font-size: x-large;
+            }
+            .checkbox-notifs input {
+                width: 24px;
+            }
+            .send-box button {
+                font-size: x-large;
+                width: 30%;
+            }
+            .form-description {
+                margin: 0;
+            }
+            main textarea {
+                font-size: x-large;
+            }
+            .form-description textarea {
+                height: 75%;
+            }
+            .forms-box,
+            .additional-forms {
+                grid-template-columns: 1fr;
+                grid-column-gap: 15px;
+                grid-row-gap: 10px;
+            }
+            .error-box {
+                margin-bottom: 10px;
+            }
+            .form-category {
+                grid-column: 1;
+            }
+            .form-description {
+                grid-column: 1;
+            }
+            body {
+                background-color: whitesmoke;
+                font-size: xx-large;
+                font-family: Arial, serif;
+            }
+            select {
+                height: 50px;
+                font-size: x-large;
+            }
+            main, footer {
+                max-width: 80vw;
+                width: 100%;
+            }
+            header {
+                width: 100vw;
+                text-align: center;
+                padding: 15px 20px;
+                border-bottom: solid dodgerblue 2px;
+            }
+            header h1 {
+                font-size: xx-large;
+            }
+            .checkboxes {
+                font-size: x-large;
+                display: flex;
+                flex-direction: column;
+            }
+            .checkboxes div {
+                display: grid;
+                grid-template-columns: 1fr 6fr;
+                justify-content: left;
+            }
+            .checkboxes div label {
+                text-align: right;
+            }
+            main input {
+                min-height: 50px;
+                font-size: x-large;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Rozbudowany Menedżer Zadań</h1>
+    </header>
+    <main>
+        <div class="main-message">
+            <h3>Dodaj nowe zadanie</h3>
+        </div>
+        <form>
+            <div class="error-box">
+                <ul>
+                    <li><p>⚠ Error ⚠</p></li>
+                </ul>
+            </div>
+            <div class="forms-box">
+                <div class="form-title">
+                    <label for="title-form">Tytuł zadania:</label><br>
+                    <input type="text" id="title-form" name="title-form"><br>
+                </div>
+                <div class="form-category">
+                    <label for="category-select">Kategoria:</label>
+                    <br>
+                    <select name="category-select" id="category-select">
+                        <option value="" selected="selected">Wybierz kategorię</option>
+                        <option value="Domowe">Domowe</option>
+                        <option value="Praca">Praca</option>
+                        <option value="Nauka">Nauka</option>
+                        <option value="Hobby">Hobby</option>
+                        <option value="Inne">Inne</option>
+                    </select>
+                </div>
+                <div class="form-description">
+                    <label for="description">Opis zadania:</label><br>
+                    <textarea type="text" id="description" name="description"></textarea>
+                </div>
+
+            </div>
+            <div class="additional-forms">
+                <div class="form-priority">
+                    <label for="priority-select">Priorytet:</label>
+                    <br>
+                    <select name="priority-select" id="priority-select">
+                        <option value="" selected="selected">Wybierz priorytet</option>
+                        <option value="Pilne">Pilne</option>
+                        <option value="Niepilne">Niepilne</option>
+                    </select>
+                </div>
+                <div class="form-status">
+                    <label for="status-select">Status:</label>
+                    <br>
+                    <select name="status-select" id="status-select">
+                        <option value="" selected="selected">Wybierz status</option>
+                        <option value="Ukończone">Ukończone</option>
+                        <option value="W trakcie">W trakcie</option>
+                        <option value="Nierozpoczęte">Nierozpoczęte</option>
+                    </select>
+                </div>
+                <div class="form-date">
+                    <label for="date-form">Data wykonania:</label><br>
+                    <input type="date" id="date-form" name="date-form"><br>
+                </div>
+                <div class="form-time">
+                    <label for="time-form">Szacowany czas (minuty):</label><br>
+                    <input type="number" id="time-form" name="time-form"><br>
+                </div>
+                <div class="form-location">
+                    <label for="location-form">Lokalizacja:</label><br>
+                    <input type="text" id="location-form" name="location-form"><br>
+                </div>
+                <div class="form-person">
+                    <label for="person-form">Osoba przypisana:</label><br>
+                    <input type="text" id="person-form" name="person-form"><br>
+                </div>
+            </div>
+
+
+
+            <h6>Potrzebne zasoby:</h6>
+            <div class="checkboxes">
+                <div class="checkbox-computer">
+                    <input type="checkbox" id="computer-checkbox" name="computer-checkbox" value="Komputer">
+                    <label for="computer-checkbox">Komputer</label>
+                </div>
+                <div class="checkbox-internet">
+                    <input type="checkbox" id="internet-checkbox" name="internet-checkbox" value="Internet">
+                    <label for="internet-checkbox">Internet</label>
+                </div>
+                <div class="checkbox-phone">
+                    <input type="checkbox" id="phone-checkbox" name="phone-checkbox" value="Telefon">
+                    <label for="phone-checkbox">Telefon</label>
+                </div>
+                <div class="checkbox-car">
+                    <input type="checkbox" id="car-checkbox" name="car-checkbox" value="Samochod">
+                    <label for="car-checkbox">Samochód</label>
+                </div>
+                <div class="checkbox-book">
+                    <input type="checkbox" id="book-checkbox" name="book-checkbox" value="Książka">
+                    <label for="book-checkbox">Książka</label>
+                </div>
+                <div class="checkbox-tools">
+                    <input type="checkbox" id="tools-checkbox" name="tools-checkbox" value="Narzędzia">
+                    <label for="tools-checkbox">Narzędzia</label>
+                </div>
+                <div class="checkbox-documents">
+                    <input type="checkbox" id="documents-checkbox" name="documents-checkbox" value="Dokumenty">
+                    <label for="documents-checkbox">Dokumenty</label>
+                </div>
+                <div class="checkbox-other">
+                    <input type="checkbox" id="other-checkbox" name="other-checkbox" value="Inne">
+                    <label for="other-checkbox">Inne</label>
+                </div>
+            </div>
+            <div class="form-time-finished">
+                <label for="time-finished-form">Data wykonania (koniec):</label><br>
+                <input type="date" id="time-finished-form" name="time-finished-form"><br>
+            </div>
+            <div class="send-box">
+                <div class="checkbox-notifs">
+                    <label for="notifs-checkbox">Powiadomienia</label>
+                    <input type="checkbox" id="notifs-checkbox" name="notifs-checkbox" value="Inne">
+                </div>
+                <button>Wyślij</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <p>Lorem ipsum</p>
+    </footer>
+</body>
+</html>
